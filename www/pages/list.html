@@ -1,0 +1,34 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="title">スキャン履歴</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">スキャンした履歴です</div>
+      <div class="list media-list">
+        <ul>
+          ${history.value.map(h => $h`
+          <li>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-subtitle">${h.format}</div>
+                <div class="item-text">${h.text}</div>
+              </div>
+            </div>
+          </li>
+          `)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  export default (props, { $store }) => {
+    // ストアから履歴データを取得
+    const { history } = $store.getters;
+    return $render;
+  }
+</script>

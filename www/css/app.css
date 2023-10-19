@@ -1,0 +1,10 @@
+/* iOS Cordova Tweak */
+.device-cordova.device-ios {
+  height: 100vh;
+}
+
+/* Your app custom styles here */
+html, body {
+  width: 100vw;
+  height: 100vh;
+}

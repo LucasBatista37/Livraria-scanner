@@ -1,0 +1,64 @@
+<template>
+    <div class="page">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="title">QR  code</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="block-title">Scanear</div>
+            <button class="button" @click=${doScan}>Scaneie aqui</button>
+            ${ scan.value.text ?
+            $h`
+            <div class="block-title">スキャン結果</div>
+            <div class="block">
+                種別： ${scan.value.format} コード： ${scan.value.text}
+            </div>
+            `
+            :
+            ''
+            }
+        </div>
+    </div>
+</template>
+<script>
+    export default (props, {
+        $store
+    }) => {
+        // ストアからデータを取得する
+        const {
+            scan
+        } = $store.getters;
+
+        const doScan = async () => {
+            try {
+                // スキャン結果を受け取る
+                console.log(monaca.BarcodeScanner)
+
+                const res = await execute();
+                // スキャン結果を適用する
+                $store.dispatch('addScan', res.data);
+            } catch (e) {
+                // キャンセルした場合
+                alert(JSON.stringify(e))
+            }
+        };
+
+        const execute = () => {
+            return new Promise((res, rej) => {
+                const option = {
+                    "oneShot": true,
+                    "timeoutPrompt": {
+                        "show": true,
+                        "timeout": 5,
+                        "prompt": "Not detected"
+                    }
+                }
+                // バーコードスキャナー起動
+                monaca.BarcodeScanner.scan(res, rej, option);
+            });
+        }
+        return $render;
+    }
+</script>
